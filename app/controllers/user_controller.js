@@ -1,3 +1,3 @@
-exports.index = function(req, res){
-	res.text('hello');
+exports.dashboard = function(req, res){
+	res.render('user/dashboard');
 }

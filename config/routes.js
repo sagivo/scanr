@@ -5,5 +5,5 @@ module.exports = function(app){
   app.get('/', home.index)
 
   let users = require('../app/controllers/user_controller');
-  app.get('/users', users.index);
+  app.get('/dashboard', users.dashboard);
 };
