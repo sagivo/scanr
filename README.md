@@ -1,2 +1,5 @@
 # scanr
-a
+come back later
+
+##install
+`supervisor -x iojs index.js`
