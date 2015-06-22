@@ -16,8 +16,8 @@ gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(STYLUS_FILES, ['stylus']);
   gulp.watch(STYLUS_FILES, livereload);
-  gulp.watch(['*.html', '*.ejs'], livereload);
-  gulp.watch('css/*.css', livereload);
+  gulp.watch(['app/views/*.html', 'app/views/*.ejs'], livereload);
+  gulp.watch('public/css', livereload);
 });
 
 gulp.task("s", function() {
