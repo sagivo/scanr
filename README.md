@@ -2,4 +2,6 @@
 come back later
 
 ##install
-`supervisor -x iojs index.js`
+`supervisor -x iojs index.js`  
+or  
+`gulp s`

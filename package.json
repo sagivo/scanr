@@ -17,6 +17,8 @@
   "devDependencies": {
     "gulp": "*",
     "gulp-stylus": "*",
-    "gulp-concat": "*"
+    "gulp-concat": "*",
+    "gulp-livereload": "*",
+    "gulp-supervisor": "*"
   }
 }
