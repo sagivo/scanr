@@ -1,3 +1,4 @@
+const STYLUS_FILES = 'public/css/stylus/*.styl'
 var gulp = require('gulp');
 var stylus = require('gulp-stylus');
 var concat = require('gulp-concat');
@@ -5,23 +6,24 @@ var livereload = require('gulp-livereload');
 supervisor = require( "gulp-supervisor" );
 
 gulp.task('stylus', function() {
-  gulp.src('public/css/stylus/*.styl')
+  gulp.src(STYLUS_FILES)
     .pipe(stylus({compress: true}))
     .pipe(concat('style.css'))
     .pipe(gulp.dest('public/css/'))
-    .pipe(livereload());
 });
 
 gulp.task('watch', function() {
   livereload.listen();
-  gulp.watch('')
+  gulp.watch(STYLUS_FILES, ['stylus']);
+  gulp.watch(STYLUS_FILES, livereload);
+  gulp.watch(['*.html', '*.ejs'], livereload);
+  gulp.watch('css/*.css', livereload);
 });
 
 gulp.task("s", function() {
   supervisor("index.js", {
-    exec: 'iojs',
-    //watch: ['*.js']
+    exec: 'iojs'
   });
 });
 
-gulp.task('default', ['stylus']);
+gulp.task('default', ['s', 'watch']);
