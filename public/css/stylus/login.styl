@@ -1,7 +1,9 @@
 @import "mixins"
 
+btn_width = 300px
+
 #signup
-  width 460px
+  width 400px
   position: absolute;
   top: 50%;
   left: 50%;
@@ -15,13 +17,17 @@
     margin 0 auto 20px
 
   input
-    width 350px
+    width btn_width
     font-size font2
     height auto
     margin-bottom 15px
-    padding 10px 20px
-    borderradius 30px
+    padding 10px 10px
+    borderradius 10px
     border 1px solid #d7d7d7
+    outline 0
+
+    button
+      width btn_width
 
   .modal-content
-    width 420px
+    width 360px

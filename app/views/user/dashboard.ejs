@@ -16,7 +16,7 @@
 </section>
 
 <!-- Modal -->
-<div class="modal1 fade1" id="signup" tabindex="-1" role="dialog" aria-labelledby="signupLabel">
+<div class="modal-fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="signupLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -25,13 +25,14 @@
       </div>
       <div class="modal-body">
 
-            <div class="container">
-              <form class="form-signin" action="login" method="post">
-                <input type="input" placeholder="Email address" name="email"><br/>
-                <input type="password" placeholder="Password" name="password"><br/>
-                <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-              </form>
-            </div> <!-- /container -->
+        <div class="container"><!-- /login -->
+          <form class="form-signin" action="login" method="post">
+            <input type="email" placeholder="Email address" name="email" required><br/>
+            <input type="password" placeholder="Password" name="password" required><br/>
+            <button class="btn btn-lg btn-primary" type="submit">Join</button>
+          </form>
+            <p><a href="#">login</a> | <a href="#">forgot password</a></p>
+        </div>
 
       </div>
     </div>

@@ -1,7 +1,7 @@
 var crypt = require('dead-simple-crypt', 'yokouno2');
 
 exports.login = function(req, res){
-  res.end(crypt.decrypt(req.body.email));
+  res.end(crypt.encrypt(req.body.email));
   //res.render('user/dashboard');
 }
 
