@@ -12,7 +12,10 @@
     "express": "*",
     "mongoose": "*",
     "ejs": "*",
-    "node-tesseract": "*"
+    "node-tesseract": "*",
+    "dead-simple-crypt": "*",
+    "body-parser": "*",
+    "multer": "*"
   },
   "devDependencies": {
     "gulp": "*",
