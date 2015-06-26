@@ -1,7 +1,7 @@
 var paths = {
   stylus: 'public/css/stylus/**/*.styl',
   front: 'app/views/**/*.{html,ejs}',
-  supervisor: ['app/controllers/', 'app/models/', 'index.js']
+  supervisor: ['app/controllers', 'app/models', 'index.js', 'config']
 }
 
 var gulp = require('gulp');
