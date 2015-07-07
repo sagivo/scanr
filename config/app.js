@@ -5,4 +5,4 @@ for (file in models_path){
 	require(file)
 }
 #load models
-require  consts.MODELS_PATH+'/'+model for model in fs.readdirSync(consts.MODELS_PATH)	
+require  consts.MODELS_PATH +'/'+ model for model in fs.readdirSync(consts.MODELS_PATH)	

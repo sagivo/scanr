@@ -12,6 +12,10 @@ app.use(express.static('public'));
 
 require('./config/routes')(app);
 
+var mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI, function(){ console.log("connected to db"); });
+
+
 var server = app.listen(8000, function () {
   var host = server.address().address;
   var port = server.address().port;

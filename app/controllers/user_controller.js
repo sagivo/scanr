@@ -1,3 +1,4 @@
+const User = mongoose.model('User');
 var crypt = require('dead-simple-crypt', 'yokouno2');
 
 exports.login = function(req, res){
