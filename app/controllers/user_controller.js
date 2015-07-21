@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-var crypt = require('dead-simple-crypt', 'yokouno2');
+var crypt = require('dead-simple-crypt', process.env.CRYPT_KEY);
 
 exports.login = function(req, res){
   res.end(crypt.encrypt(req.body.email));
