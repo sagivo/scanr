@@ -1,6 +1,6 @@
 var paths = {
   stylus: 'public/css/stylus/**/*.styl',
-  front: 'app/views/**/*.{html,ejs}',
+  front: ['app/views/**/*.{html,ejs}','public/js/**/*.js'],
   supervisor: ['app/controllers', 'app/models', 'index.js', 'config']
 }
 
@@ -19,13 +19,14 @@ gulp.task('stylus', function() {
 });
 
 gulp.task('reload_page', function() {
+  console.log('????');
   livereload.reload();
 });
 
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(paths.stylus, ['stylus']);
-  gulp.watch([paths.front], ['reload_page'])
+  gulp.watch(paths.front, ['reload_page'])
 });
 
 gulp.task("s", function() {

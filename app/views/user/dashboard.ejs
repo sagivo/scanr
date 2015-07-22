@@ -7,7 +7,7 @@
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#signup">
-  Launch demo modal
+  Launcha demo modal
 </button>
 
 
@@ -26,19 +26,18 @@
       <div class="modal-body">
 
         <div class="container"><!-- /login -->
-          <form class="form-signin" action="register" method="post">
+          <form id="sign-form" class="form-signin" action="register" method="post">
             <input type="email" placeholder="Email address" name="email" required><br/>
             <input type="password" placeholder="Password" name="password" required><br/>
             <button class="btn btn-lg btn-primary" type="submit">Join</button>
           </form>
-            <p><a href="#">login</a> | <a href="#">forgot password</a></p>
+            <p><a href="#" id="login-link">login</a> | <a href="#">forgot password</a></p>
         </div>
 
       </div>
     </div>
   </div>
 </div>
-
 
 
 <%- include ../footer -%>
