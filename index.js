@@ -11,7 +11,7 @@ app.use(express.static('public'));
 
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URI, function(){ console.log("connected to db"); });
+mongoose.connect(process.env.MONGODB_URI, function(err, status){ if (err) return console.error(err); else console.log("connected to db"); });
 require('./config/init')(app);
 require('./config/routes')(app);
 

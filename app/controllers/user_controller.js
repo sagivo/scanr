@@ -5,11 +5,12 @@ const User = mongoose.model('User');
 var crypt = require('dead-simple-crypt', process.env.CRYPT_KEY);
 
 exports.login = function(req, res){
-  User.findOne({email: params.body.email, password: crypt.encrypt(req.body.password)}, function(err, user){
+  console.log(req.body);
+  User.findOne({email: req.body.email, password: crypt.encrypt(req.body.password)}, function(err, user){
     if (user){
       res.cookie('t', token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
       res.json({status: 'ok'});
-    } else res.json({error: 'no user found'});
+    } else res.render('user/dashboard', {alert: {type: 'danger', msg: 'user not found'} });
   });
 }
 
@@ -31,4 +32,7 @@ exports.dashboard = function(req, res){
 exports.logout = function(req, res){
   res.clearCookie('t');
   res.redirect('/');
+}
+
+exports.reset = function(req, res){
 }
