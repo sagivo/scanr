@@ -9,18 +9,18 @@ exports.login = function(req, res){
   User.findOne({email: req.body.email, password: crypt.encrypt(req.body.password)}, function(err, user){
     if (user){
       res.cookie('t', token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
-      res.json({status: 'ok'});
-    } else res.render('user/dashboard', {alert: {type: 'danger', msg: 'user not found'} });
+      res.render('user/dashboard', {alert: {type: 'success', msg: 'Welcome again.'} })
+    } else res.render('user/dashboard', {alert: {type: 'danger', msg: 'User not found'} });
   });
 }
 
 exports.register = function(req, res){
   let token = crypt.gui();
   User.create({email: req.body.email, password: crypt.encrypt(req.body.password), token: token}, function(err, user){
-    if (err) res.json({error: 'bad user data'})
+    if (err) res.render('user/dashboard', {alert: {type: 'danger', msg: 'Oops, something bad happened. Please try again.'} });
     if (user){
       res.cookie('t', token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
-      res.json(user);
+      res.render('user/dashboard', {alert: {type: 'success', msg: 'Welcome! Please check your email to verify the account.'} })
     }
   });
 }
