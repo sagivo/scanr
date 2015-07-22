@@ -28,10 +28,11 @@
         <div class="container"><!-- /login -->
           <form id="sign-form" class="form-signin" action="register" method="post">
             <input type="email" placeholder="Email address" name="email" required><br/>
-            <input type="password" placeholder="Password" name="password" required><br/>
-            <button class="btn btn-lg btn-primary" type="submit">Join</button>
+            <input id="password" type="password" placeholder="Password" name="password" required><br/>
+            <button id="login-submit" class="btn btn-lg btn-primary" type="submit">Join</button>
           </form>
-            <p><a href="#" id="login-link">login</a> | <a href="#">forgot password</a></p>
+          <p><a href="#" id="login-link">login</a></p>
+          <p style="display:none;"><a href="#" id="register-link">register</a> | <a href="#" id="forgot-pass-link">forgot password</a></p>
         </div>
 
       </div>
