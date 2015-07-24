@@ -1,16 +1,17 @@
 "use strict";
 
 const mongoose = require('mongoose');
+const secrets = require('../../config/secrets.js');
 const User = mongoose.model('User');
-var crypt = require('dead-simple-crypt', process.env.CRYPT_KEY);
+var crypt = require('dead-simple-crypt', secrets.CRYPT_KEY);
 
 exports.login = function(req, res){
   console.log(req.body);
   User.findOne({email: req.body.email, password: crypt.encrypt(req.body.password)}, function(err, user){
     if (user){
-      res.cookie('t', token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
+      res.cookie('t', user.token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
       res.render('user/dashboard', {alert: {type: 'success', msg: 'Welcome again.'} })
-    } else res.render('user/dashboard', {alert: {type: 'danger', msg: 'User not found'} });
+    } else {res.alert = {type: 'danger', msg: 'User not found!'}; res.redirect('/dashboard'); }
   });
 }
 
@@ -26,6 +27,7 @@ exports.register = function(req, res){
 }
 
 exports.dashboard = function(req, res){
+  console.log(req.url);
 	res.render('user/dashboard');
 }
 
@@ -35,4 +37,8 @@ exports.logout = function(req, res){
 }
 
 exports.reset = function(req, res){
+}
+
+exports.settings = function(req, res){
+  res.render('user/settings');
 }

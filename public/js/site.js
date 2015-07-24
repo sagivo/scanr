@@ -3,7 +3,7 @@ $(function(){
   "use strict"; // Start of use strict
   $('#login-link').click(function(){
     $(this).closest('p').hide().next().show();
-    $('#signupLabel').text('Sign-in');
+    $('#signupLabel').text('Signin');
     $('#login-submit').text('Login');
     $('#sign-form').attr('action', 'login');
   });
@@ -18,6 +18,7 @@ $(function(){
 
   $('#forgot-pass-link').click(function(){
     $('#password').hide().removeAttr('required');
+    $('#signupLabel').text('Reset Password');
     $('#login-submit').text('Reset');
     $('#sign-form').attr('action', 'reset');
   });

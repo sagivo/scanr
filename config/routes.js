@@ -12,4 +12,5 @@ module.exports = function(app){
   app.get('/reset', users.reset);
   app.post('/register', users.register);
   app.get('/dashboard', users.dashboard);
+  app.get('/settings', users.settings);
 };
