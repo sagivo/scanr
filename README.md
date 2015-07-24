@@ -1,5 +1,5 @@
 # scanr
-come back later
+come back later when i have more things
 
 ##install
 1. add `config/secrets.js` file with:
