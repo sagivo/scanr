@@ -19,7 +19,6 @@ gulp.task('stylus', function() {
 });
 
 gulp.task('reload_page', function() {
-  console.log('????');
   livereload.reload();
 });
 

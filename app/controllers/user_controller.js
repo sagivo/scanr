@@ -27,7 +27,6 @@ exports.register = function(req, res){
 }
 
 exports.dashboard = function(req, res){
-  console.log(req.url);
 	res.render('user/dashboard');
 }
 
