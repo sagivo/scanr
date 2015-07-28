@@ -23,7 +23,6 @@ gulp.task('reload_page', function() {
 });
 
 gulp.task('watch', function() {
-  livereload.listen();
   gulp.watch(paths.stylus, ['stylus']);
   gulp.watch(paths.front, ['reload_page'])
 });
@@ -34,5 +33,11 @@ gulp.task("s", function() {
     watch: paths.supervisor
   });
 });
+
+gulp.task("livereload", function() {
+  livereload.listen();
+});
+
+
 
 gulp.task('default', ['s', 'watch']);
