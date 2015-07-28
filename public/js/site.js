@@ -1,6 +1,7 @@
 if (window.location.href.includes('flash=')) window.history.replaceState('Object', 'Title', window.location.href.replace(/flash=.*--/, ''));
 $(function(){
   //alerts
+  $('.alert').delay(5000).slideUp(500);
   //login module
   "use strict"; // Start of use strict
   $('#login-link').click(function(){

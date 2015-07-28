@@ -6,13 +6,11 @@ const User = mongoose.model('User');
 var crypt = require('dead-simple-crypt', secrets.CRYPT_KEY);
 
 exports.login = function(req, res){
-  console.log('in login');
   User.findOne({email: req.body.email, password: crypt.encrypt(req.body.password)}, function(err, user){
     if (user){
       res.cookie('t', user.token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
       res.redirect('/dashboard?flash=success--Welcome back!--')
     } else {
-      console.log('in else');
       res.redirect('/dashboard?flash=danger--Wrong email/password. Please try again.--')
     }
   });
