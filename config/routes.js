@@ -11,7 +11,7 @@ module.exports = function(app){
   app.get('/logout', users.logout);
   app.get('/email', users.email);
   app.get('/reset', users.reset);
-  app.get('/dashboard', users.dashboard);
+  app.get('/dashboard', ac.verify_cookie, users.dashboard);
   app.get('/verify/:token', users.verify);
   app.get('/settings', users.settings);
 };

@@ -14,10 +14,13 @@ exports.verify_token = function(req, res, next){
 }
 
 exports.verify_cookie = function(req, res, next){
-  if (!req.token) res.redirect('/');
+  req.token = helpers_general.parseCookies(req).t;
+  if (!req.token) return res.redirect('/');
+
   User.findOne({token: req.token}, function (err, user){
     if (user){
       req.user = user;
+      console.log('ok');
       next();
     } else res.redirect('/');
   });

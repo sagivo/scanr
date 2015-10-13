@@ -2,6 +2,11 @@
 <html>
 <head>
   <title></title>
+  <style>
+  table, th, td {
+    border: 1px solid black;
+  }
+  </style>
 </head>
 <body style="">
   <h1>Some Title</h1>
@@ -12,7 +17,7 @@
     Don't panice, it's a real website. Yep, we didn't invest too much in design but you're not here for fancy landing pages.<br/>
     We offers a simple API service that can extract text from images, any image, including PDF files.
   </p>
-  <h3>How It Works?</h3>
+  <h3>How Does It Work?</h3>
   <p>Simeple - post us your image and get a response with the text inside in real time.</p>
   <p>
     request: <code>curl -F "image=@/path/to/image.jpg" http://foo.com?token=YOUR_TOKEN</code><br/>
@@ -20,13 +25,35 @@
   </p>
   <p>Read the full <a href="#">API documentation</a>.</p>
   <p>Yep, that simple. We can fake it and make it look more complex just to charge more, but then we will become like them.</p>
-  <p>Not into curl? Try our <a href="#">ruby</a>, <a href="#">node.js</a> or <a href="#">pyton</a> plugins.</p>
+  <p>Not into curl? Try our <a href="#">ruby</a>, <a href="#">node.js</a> or <a href="#">python</a> plugins.</p>
+  <h3>Who Is It Good For?</h3>
+  <p>Anyone who need to extract text from an image or PDF.</p>
+  <ul>
+    <li>Lawyers can scan their documents fast.</li>
+    <li>Extract details from a business card.</li>
+    <li>Scan and store all your promocodes and paper offers.</li>
+    <li>Extract info from bills.</li>
+    <li>Anything you can think of.</li>
+  </ul>
   <h2>Pricing</h2>
   <p>That's the place where you can choose 4 different plans where only one actually makes sense. Well, let's save you the trubles and make it simple:</p>
-  <ul>
-    <li><u>FREE FOREVER</u>: You want to test our server, play around or just been cheep? You can make up to 100 calls a month for free. Yep, free.</il>
-    <li><u>+100 API Calls - $0.01 per API Call</u>: You actually have a product that works and have (some) money. Pay only 1 cent for API call. Help us getting there and maybe we'll finally be able to afford hiring a client-side designer.</li>
-  </ul>
+  <table>
+    <tr>
+      <th>API CALLS</th>
+      <th>PRICE</th>
+      <th>INFO</th
+    </tr>
+    <tr>
+      <td>up to 100</td>
+      <td>FREE</td>
+      <td>You want to test our service or just play around? You can make up to 100 calls a month for free. No credit card needed.</td>
+    </tr>
+    <tr>
+      <td>+100</td>
+      <td>$5 + ¢1/call</td>
+      <td>You actually have a product that works and have (some?) money. Pay only $5 and then 1 cent for each call. Help us getting there and maybe we'll finally be able to afford hiring a client-side designer.</td>
+    </tr>
+  </table>
   <a name="join"><h2>Login / Register</h2></a>
   <form action="/login" method="POST" >
     <p>Yeah, never got why you need 2 different forms for that.</p>
