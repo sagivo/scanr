@@ -12,6 +12,7 @@ module.exports = function(app){
   app.get('/email', users.email);
   app.get('/reset', users.reset);
   app.get('/dashboard', ac.verify_cookie, users.dashboard);
+  app.post('/card', ac.verify_cookie, users.card);
   app.get('/verify/:token', users.verify);
   app.get('/settings', users.settings);
 };

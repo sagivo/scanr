@@ -20,7 +20,6 @@ exports.verify_cookie = function(req, res, next){
   User.findOne({token: req.token}, function (err, user){
     if (user){
       req.user = user;
-      console.log('ok');
       next();
     } else res.redirect('/');
   });
