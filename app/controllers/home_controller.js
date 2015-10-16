@@ -5,7 +5,7 @@ exports.index = function(req, res){
 }
 
 exports.test = function(req, res){
-  tesseract.process(__dirname + '/1.png', function(err, text) {
+  tesseract.process(__dirname + '/uploads/1.png', function(err, text) {
     if(err) console.error(err);
     else {
       console.log(text);

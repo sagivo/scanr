@@ -24,7 +24,6 @@ exports.login = function(req, res){
 }
 
 exports.dashboard = function(req, res){
-  console.log(req.user);
 	res.render('user/dashboard', {user: req.user});
 }
 
@@ -56,7 +55,6 @@ exports.reset = function(req, res){
 }
 
 exports.card = function(req, res){
-  console.log(req.body);
   req.user.card.number = crypt.encrypt(req.body.number);
   req.user.card.last_digits = req.body.number.substr(req.body.number.length - 4);
   req.user.card.year = req.body.year;

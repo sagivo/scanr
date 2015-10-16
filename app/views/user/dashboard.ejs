@@ -7,25 +7,20 @@
   <h1>Dashboard</h1>
   <h2>Info</h2>
   Your token: <%= user.token %> <br/>
+  Email: <%= user.email %> <br/>
+  <h2>API Calls</h2>
   This month calls: 1223<br/>
   Expected bill: $1.2<br/>
   <% if (user.card.token) { %>
   Card number: ****<%= user.card.last_digits %>
   <% }  %>
-  <h3>Update Payment</h3>
+  <h2>Update Payment</h2>
 
   <form id="payment-form" onsubmit="return onUpdateCard(this);" action="card" method="POST" >
     <div class="form-row">
       <label>
         <span>Card Number</span>
         <input type="text" name="number" size="20" data-stripe="number"/>
-      </label>
-    </div>
-
-    <div class="form-row">
-      <label>
-        <span>CVC</span>
-        <input type="text" name="cvc" size="4" data-stripe="cvc"/>
       </label>
     </div>
 
@@ -38,8 +33,15 @@
       <input type="text" name="year" size="2" data-stripe="exp-year"/>
     </div>
 
-    <button type="submit">Submit Payment</button>
+    <div class="form-row">
+      <label>
+        <span>CVC</span>
+        <input type="text" name="cvc" size="4" data-stripe="cvc"/>
+      </label>
+    </div>
+
     <input type="hidden" name="token" id="token" />
+    <button type="submit">Update Payment</button>
   </form>
   <p id="error" style="color:red;"></p>
 
