@@ -30,7 +30,7 @@ userSchema.methods.bills = function(cb){
 };
 
 userSchema.methods.monthly_bill = function(){
-  return 5 + this.monthly_calls_count * Call.price_per_call;
+  return (this.monthly_calls_count > 100) ? 5 + this.monthly_calls_count * Call.price_per_call : 0;
 }
 
 userSchema.set('autoIndex', true);

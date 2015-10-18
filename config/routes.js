@@ -6,6 +6,7 @@ module.exports = function(app){
   const home = require('../app/controllers/home_controller');
   app.get('/', home.index)
   app.get('/test', home.test);
+  app.get('/error', home.error);
 
   const users = require('../app/controllers/user_controller');
   app.post('/login', users.login);
@@ -14,7 +15,7 @@ module.exports = function(app){
   app.get('/reset', users.reset);
   app.get('/dashboard', ac.verify_cookie, users.dashboard);
   app.post('/card', ac.verify_cookie, users.card);
-  app.get('/verify/:token', users.verify);
+  app.get('/verify/:id', users.verify);
   app.get('/settings', users.settings);
   app.get('/calls', ac.verify_cookie, users.calls);
   app.get('/bills', ac.verify_cookie, users.bills);

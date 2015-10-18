@@ -6,18 +6,19 @@ const User = mongoose.model('User');
 const crypt = require('dead-simple-crypt', secrets.CRYPT_KEY);
 
 exports.login = function(req, res){
-  User.findOne({email: req.body.email, password: crypt.encrypt(req.body.password)}, function(err, user){
-    if (err) return res.redirect('/err');
+  User.findOne({email: req.body.email}, function(err, user){
+    if (err) return res.redirect('/error');
     if (user){
-      res.cookie('t', user.token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
-      res.redirect('dashboard');
+      if (user.password == crypt.encrypt(req.body.password) ){
+        res.cookie('t', user.token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
+        res.redirect('dashboard');
+      } else return res.redirect('/error?msg=1');
     } else { //create new
       let token = crypt.gui();
       User.create({email: req.body.email, password: crypt.encrypt(req.body.password), token: token}, function(err, user){
         if (user) {
-          res.cookie('t', token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
           res.redirect('email');
-        } else return res.redirect('/err');
+        } else return res.redirect('/error');
       });
     }
   });
@@ -32,17 +33,17 @@ exports.email = function(req, res){
 }
 
 exports.verify = function(req, res){
-  User.findOne({token: req.params.token}, function(err, user){
+  User.findById(req.params.id, function(err, user){
     if (user) {
       user.verified = true;
       user.save(function(err){
-        if (user) {
-          res.cookie('t', req.params.token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
-          console.log("going to dash");
+        console.log('saved');
+        if (!err) {
+          res.cookie('t', user.token, {expires: new Date(Date.now() + 30 * 24 * 3600000) }); //30 days
           res.redirect('/dashboard');
-        } else return res.redirect('/?flash=danger--Oops, something bad happened. Please try again.--');
+        } else return res.redirect('/error');
       });
-    } else res.redirect('/err');
+    } else res.redirect('/error');
   });
 }
 
