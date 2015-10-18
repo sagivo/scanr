@@ -29,7 +29,7 @@ gulp.task('watch', function() {
 
 gulp.task("s", function() {
   supervisor("index.js", {
-    exec: 'iojs',
+    exec: 'node',
     watch: paths.supervisor
   });
 });

@@ -16,4 +16,8 @@ module.exports = function(app){
   app.post('/card', ac.verify_cookie, users.card);
   app.get('/verify/:token', users.verify);
   app.get('/settings', users.settings);
+
+  const call = require('../app/controllers/call_controller');
+  app.get('/upload', ac.verify_token, call.upload)
+
 };

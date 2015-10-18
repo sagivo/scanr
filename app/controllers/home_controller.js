@@ -5,11 +5,14 @@ exports.index = function(req, res){
 }
 
 exports.test = function(req, res){
-  tesseract.process(__dirname + '/uploads/1.png', function(err, text) {
-    if(err) console.error(err);
+  tesseract.process(__dirname + '/../../uploads/hello.pdf', function(err, text) {
+    if(err) {
+      console.log(err);
+      res.render('test', {text: err});
+    }
     else {
       console.log(text);
-      res.render('home', {text: text});
+      res.render('test', {text: text});
     }
   });
 }
