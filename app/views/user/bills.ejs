@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bill History</title>
+</head>
+<body>
+<h1>Bill History</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Total</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <% bills.forEach( bill => { %>
+  <tr>
+    <td><%= bill.status %></td>
+    <td>$<%= bill.total %></td>
+    <td><%= bill.time %></td>
+  </tr>
+  <% }) %>
+</table>
+
+</body>
+</html>
