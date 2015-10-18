@@ -4,12 +4,12 @@ const User = mongoose.model('User');
 
 exports.verify_token = function(req, res, next){
   token = req.query.token
-  if (!token) res.json({error: 'must specify token'});
+  if (!token) res.json(401, {error: 'must specify token'});
   User.findOne({token: token}, function (err, user){
     if (user){
       res.locals.user = req.user = user;
       next();
-    } else res.json({error: 'unknown token'});
+    } else res.json(401, {error: 'unknown token'});
   });
 }
 

@@ -9,8 +9,8 @@
   Your token: <%= user.token %> <br/>
   Email: <%= user.email %> <br/>
   <h2>API Calls</h2>
-  This month calls: 1223<br/>
-  Expected bill: $1.2<br/>
+  This month calls: <a href="/calls"><%= user.monthly_calls_count %></a><br/>
+  Expected bill: $<%= user.monthly_bill() %><br/>
   <% if (user.card.token) { %>
   Card number: ****<%= user.card.last_digits %>
   <% }  %>

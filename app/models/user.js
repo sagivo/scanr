@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Call = mongoose.model('Call');
 
 var userSchema = new Schema({
   name: String,
@@ -15,9 +16,19 @@ var userSchema = new Schema({
   },
   password: String,
   verified: Boolean,
+  calls : [{ type: Schema.Types.ObjectId, ref: 'Call' }],
+  monthly_calls_count: {type: Number, default: 0}
 });
-userSchema.set('autoIndex', true);
 
+userSchema.methods.monthly_calls = function(cb){
+  Call.find({user: this.id}, cb);
+};
+
+userSchema.methods.monthly_bill = function(){
+  return 5 + this.monthly_calls_count * Call.price_per_call;
+}
+
+userSchema.set('autoIndex', true);
 
 fpp = mongoose.model('User', userSchema);
 

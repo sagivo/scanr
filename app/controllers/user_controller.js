@@ -64,6 +64,10 @@ exports.card = function(req, res){
   req.user.save( err => res.redirect('/dashboard') );
 }
 
+exports.calls = function(req, res){
+  req.user.monthly_calls( (err, calls) => res.render('user/calls', {calls: calls}) );
+}
+
 exports.settings = function(req, res){
   res.render('user/settings');
 }
