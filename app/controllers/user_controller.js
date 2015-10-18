@@ -68,6 +68,10 @@ exports.calls = function(req, res){
   req.user.monthly_calls( (err, calls) => res.render('user/calls', {calls: calls}) );
 }
 
+exports.bills = function(req, res){
+  req.user.bills( (err, bills) => res.render('user/bills', {bills: bills}) );
+}
+
 exports.settings = function(req, res){
   res.render('user/settings');
 }

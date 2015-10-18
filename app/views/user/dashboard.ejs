@@ -10,7 +10,7 @@
   Email: <%= user.email %> <br/>
   <h2>API Calls</h2>
   This month calls: <a href="/calls"><%= user.monthly_calls_count %></a><br/>
-  Expected bill: $<%= user.monthly_bill() %><br/>
+  Expected bill: <a href="/bills">$<%= user.monthly_bill() %></a><br/>
   <% if (user.card.token) { %>
   Card number: ****<%= user.card.last_digits %>
   <% }  %>

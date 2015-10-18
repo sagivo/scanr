@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Call = mongoose.model('Call');
+const Bill = mongoose.model('Bill');
 
 var userSchema = new Schema({
   name: String,
@@ -22,6 +23,10 @@ var userSchema = new Schema({
 
 userSchema.methods.monthly_calls = function(cb){
   Call.find({user: this.id}, cb);
+};
+
+userSchema.methods.bills = function(cb){
+  Bill.find({user: this.id}, cb);
 };
 
 userSchema.methods.monthly_bill = function(){

@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 var callSchema = new Schema({
   user : { type: Schema.Types.ObjectId, ref: 'User' },
-  uid: String,
   name: String,
   time: { type: Date, default: Date.now },
 });
