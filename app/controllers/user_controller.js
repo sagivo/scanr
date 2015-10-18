@@ -34,7 +34,7 @@ exports.email = function(req, res){
 
 exports.verify = function(req, res){
   User.findById(req.params.id, function(err, user){
-    if (user) {
+    if (user && !user.verified) {
       user.verified = true;
       user.save(function(err){
         console.log('saved');
