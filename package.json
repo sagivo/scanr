@@ -14,7 +14,8 @@
     "ejs": "*",
     "node-tesseract": "*",
     "dead-simple-crypt": "*",
-    "body-parser": "*"
+    "body-parser": "*",
+    "nodemailer": "*"
   },
   "devDependencies": {
     "gulp": "*",

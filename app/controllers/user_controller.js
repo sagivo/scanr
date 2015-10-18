@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const secrets = require('../../config/secrets.js');
 const User = mongoose.model('User');
 const crypt = require('dead-simple-crypt', secrets.CRYPT_KEY);
+const nodemailer = require('nodemailer');
 
 exports.login = function(req, res){
   User.findOne({email: req.body.email}, function(err, user){
@@ -18,6 +19,13 @@ exports.login = function(req, res){
       User.create({email: req.body.email, password: crypt.encrypt(req.body.password), token: token}, function(err, user){
         if (user) {
           res.redirect('email');
+          //send email
+          const transporter = nodemailer.createTransport({service: 'Gmail', auth: {user: secrets.mailer.email,pass: secrets.mailer.password}});
+          transporter.sendMail({
+            from: `OCR <${secrets.mailer.email}>`, to: user.email,
+            subject: 'Welcome to OCR',
+            html: `<h1>Welcome to OCR</h1><a href="http://localhost:8080/verify/${user.id}">Please click here to verify your account</a><p>Thanks,<br/>The team</p>`
+          }, (err, info)=> console.log(err) );
         } else return res.redirect('/error');
       });
     }
