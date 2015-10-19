@@ -8,7 +8,7 @@ var gulp = require('gulp');
 var stylus = require('gulp-stylus');
 var concat = require('gulp-concat');
 var livereload = require('gulp-livereload');
-supervisor = require( "gulp-supervisor" );
+var supervisor = require( "gulp-supervisor" );
 
 gulp.task('stylus', function() {
   gulp.src(paths.stylus)
@@ -23,6 +23,7 @@ gulp.task('reload_page', function() {
 });
 
 gulp.task('watch', function() {
+  livereload.listen(); //comment if you don't want livereload
   gulp.watch(paths.stylus, ['stylus']);
   gulp.watch(paths.front, ['reload_page'])
 });
@@ -34,11 +35,4 @@ gulp.task("s", function() {
   });
 });
 
-gulp.task("livereload", function() {
-  livereload.listen();
-});
-
-
-
 gulp.task('default', ['s', 'watch']);
- 
