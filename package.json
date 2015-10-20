@@ -15,7 +15,8 @@
     "node-tesseract": "*",
     "dead-simple-crypt": "*",
     "body-parser": "*",
-    "nodemailer": "*"
+    "nodemailer": "*",
+    "imagemagick": "*"
   },
   "devDependencies": {
     "gulp": "*",
