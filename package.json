@@ -16,7 +16,8 @@
     "dead-simple-crypt": "*",
     "body-parser": "*",
     "nodemailer": "*",
-    "imagemagick": "*"
+    "imagemagick": "*",
+    "multer": "*"
   },
   "devDependencies": {
     "gulp": "*",

@@ -1,11 +1,12 @@
 "use strict";
+const multer  = require('multer')();
 
 const ac = require('../app/controllers/application_controller');
 
 module.exports = function(app){
   const home = require('../app/controllers/home_controller');
   app.get('/', home.index)
-  app.all('/test', home.test);
+  app.all('/test', multer.single('upload'), home.test);
   app.get('/error', home.error);
 
   const users = require('../app/controllers/user_controller');
@@ -21,6 +22,6 @@ module.exports = function(app){
   app.get('/bills', ac.verify_cookie, users.bills);
 
   const call = require('../app/controllers/call_controller');
-  app.all('/ocr', ac.verify_token, call.ocr)
+  app.all('/ocr', ac.verify_token, call.ocr);
 
 };

@@ -16,26 +16,6 @@ exports.error = function(req, res){
 }
 
 exports.test = function(req, res){
-  const uploads_path = path.join(__dirname , '/../../uploads/')
-  const output_path = path.join(__dirname , '/../../output/')
-  const full_file_name = 'p.pdf'
-
-  const file_name = full_file_name.split('.')[0];
-  im.convert(['-density', '300', uploads_path+'p.pdf', '-quality', '100', '-sharpen', '0x1.0', output_path + file_name + '.png'], (err, stdout) => {
-    if (err) throw err;
-
-    const file_names = fs.readdirSync(output_path).filter(v=>v.startsWith(file_name));
-    const docs = new Array(file_names.length);
-    let page_counter = 0;
-    for (let i=0; i<file_names.length; i++) {
-      tesseract.process(path.resolve(output_path, file_names[i]), (err, text) => {
-        if(err) { console.log(err); res.render('test', {text: err}); }
-        else {
-          console.log(i,page_counter);
-          docs[i] = text;
-          if (page_counter++ == file_names.length-1) res.json(docs);
-        }
-      });
-    }
-  });
+  console.log(req.file, req.body);
+  res.end('bye\n');
 }
