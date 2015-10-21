@@ -9,5 +9,5 @@ module.exports = {
   CRYPT_KEY: 'choose random key to crypt'
 }
 ```
-2. start the server  
+2. start the server
 `gulp s`

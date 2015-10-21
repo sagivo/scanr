@@ -5,7 +5,7 @@ const ac = require('../app/controllers/application_controller');
 module.exports = function(app){
   const home = require('../app/controllers/home_controller');
   app.get('/', home.index)
-  app.get('/test', home.test);
+  app.all('/test', home.test);
   app.get('/error', home.error);
 
   const users = require('../app/controllers/user_controller');
