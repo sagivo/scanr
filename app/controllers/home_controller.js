@@ -1,18 +1,23 @@
 "use strict";
 const path =  require('path');
+var fs = require('fs');
 
-const uploads_path = path.join(__dirname , '/../../uploads/')
+const secrets = require('../../config/secrets');
+var AWS = require('aws-sdk');
+var s3 = new AWS.S3({credentials: {accessKeyId: secrets.aws.accessKeyId, secretAccessKey: secrets.aws.secretAccessKey}});
+
+const uploads_path = path.join(__dirname , '/../../uploads')
 const multer = require('multer');
 const upload  = multer({
-  fileSize: 4194304, fieldNameSize: 500, dest: 'uploads/',
+  fileSize: 4194304, fieldNameSize: 500,
   storage: multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploads_path);
-  },
-  filename: (req, file, cb) => {
-    console.log('here');
-    cb(null, Date.now()+ '-' + file.originalname);
-  }})
+    destination: (req, file, cb) => {
+      const full_path = `${uploads_path}/${req.user.id}`;
+      if (!fs.existsSync(full_path)) fs.mkdirSync(full_path);
+      cb(null, full_path);
+    },
+    filename: (req, file, cb) => cb(null, Date.now()+ '-' + file.originalname)
+  })
 });
 
 exports.index = function(req, res){
@@ -28,8 +33,15 @@ exports.error = function(req, res){
 exports.test = function(req, res){
   const upload_name = 'file';
   upload.single(upload_name)(req, res, (err) => {
-    if (err) return res.json({error: `must to have "${upload_name}" attribute`});
-    console.log(req.file, req.body);
+    if (err) return res.json({error: err});
+
+    fs.readFile(req.file.path, (err, file) => {
+      s3.upload({Bucket: 'scanr-dev/' + req.user.id, Key: req.file.filename, Body: file}).send((err, data) => {
+        console.log(err,data);
+      });
+    });
+
+    //console.log(req.file);
     res.end('bye\n');
   });
 }

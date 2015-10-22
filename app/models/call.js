@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 var callSchema = new Schema({
   user : { type: Schema.Types.ObjectId, ref: 'User' },
+  pages: Number,
   name: String,
   time: { type: Date, default: Date.now },
 });

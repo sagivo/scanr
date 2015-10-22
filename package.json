@@ -17,7 +17,8 @@
     "body-parser": "*",
     "nodemailer": "*",
     "imagemagick": "*",
-    "multer": "*"
+    "multer": "*",
+    "aws-sdk": "*"
   },
   "devDependencies": {
     "gulp": "*",
