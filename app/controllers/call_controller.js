@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const Call = mongoose.model('Call');
 const User = mongoose.model('User');
 const File = mongoose.model('File');
+const acceptable_types = new Set(['pdf', 'bmp', 'pnm', 'png', 'jpg', 'jpeg', 'tiff', 'gif', 'ps', 'webp']);
 
 const upload_name = 'file';
 const converted_pdf_format = 'png';
@@ -22,10 +23,22 @@ exports.ocr = function(req, res){
     // console.log(req.file);
     // return res.end('aa');
     const file_type = req.file.originalname.split('.').pop().toLowerCase();
+    if (!acceptable_types.has(file_type)) {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(req.file.path);}
     const file_name = req.file.filename;
 
+    //handle image types
+    if (file_type != 'pdf'){
+      tesseract.process(req.file.path, (err, text) => {
+        uploadS3(req.file.path, req.user.id, Date.now() + '-' + req.file.originalname, (err, data) => {
+          res.status(200).json({text: text});
+          File.create({user: req.user.id, text: text, url: data.Location}, (err) => {if (err) throw err;} );
+        });
+        fs.unlink(req.file.path);
+        updateCounts(req.user.id, 1);
+      });
+    }
     //handle pdf
-    if (file_type == 'pdf'){
+    else if (file_type == 'pdf'){
       pdf2Img(file_name, (err, data)=>{
         if (err) throw err;
 
@@ -40,13 +53,13 @@ exports.ocr = function(req, res){
             else {
               docs[i] = text;
               //upload files to s3, create file in db, delete file in fs
-              uploadS3(pdf2image_path, 'scanr-dev/' + req.user.id, file_names[i], (err, data) => {
+              uploadS3(pdf2image_path, req.user.id, file_names[i], (err, data) => {
                 if (err) throw err;
                 File.create({user: req.user.id, text: text, url: data.Location}, (err) => console.log(err) );
                 fs.unlink(pdf2image_path, (err, data) => {if (err) throw err;});
               });
               if (page_counter++ == file_names.length-1) {
-                res.json(docs);
+                res.status(200).json({text: docs});
                 fs.unlink(req.file.path, (err, data) => {if (err) throw err;});
               }
             }
@@ -72,6 +85,6 @@ const s3 = new AWS.S3({credentials: {accessKeyId: secrets.aws.accessKeyId, secre
 
 function uploadS3(file_path, bucket, key, cb){
   fs.readFile(file_path, (err, file) => {
-    s3.upload({Bucket: bucket, Key: key, Body: file, ACL: 'public-read'}).send(cb);
+    s3.upload({Bucket: secrets.aws.s3_main_bkt_name + '/' + bucket, Key: key, Body: file, ACL: 'public-read'}).send(cb);
   });
 }
