@@ -55,7 +55,7 @@ exports.ocr = function(req, res){
               //upload files to s3, create file in db, delete file in fs
               uploadS3(pdf2image_path, req.user.id, file_names[i], (err, data) => {
                 if (err) throw err;
-                File.create({user: req.user.id, text: text, url: data.Location}, (err) => console.log(err) );
+                File.create({user: req.user.id, text: text, url: data.Location}, (err) => {if(err) throw err;} );
                 fs.unlink(pdf2image_path, (err, data) => {if (err) throw err;});
               });
               if (page_counter++ == file_names.length-1) {
