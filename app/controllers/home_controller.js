@@ -6,7 +6,7 @@ const secrets = require('../../config/secrets');
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3({credentials: {accessKeyId: secrets.aws.accessKeyId, secretAccessKey: secrets.aws.secretAccessKey}});
 
-const uploads_path = path.join(__dirname , '/../../uploads')
+const uploads_path = path.join(__dirname , '/../../uploads');
 const multer = require('multer');
 const upload  = multer({
   fileSize: 4194304, fieldNameSize: 500,
