@@ -15,7 +15,15 @@ const converted_pdf_format = 'png';
 const uploads_path = path.join(__dirname , '/../../uploads')
 const multer = require('multer');
 const upload  = multer({
-  fileSize: 4194304, fieldNameSize: 500, dest: uploads_path
+  fileSize: 4194304, fieldNameSize: 500,
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, uploads_path);
+    },
+    filename: function(req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname);
+    }
+  })
 });
 
 exports.ocr = function(req, res){
@@ -24,7 +32,6 @@ exports.ocr = function(req, res){
     // return res.end('aa');
     const file_type = req.file.originalname.split('.').pop().toLowerCase();
     if (!acceptable_types.has(file_type)) {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(req.file.path);}
-    const file_name = req.file.filename;
 
     //handle image types
     if (file_type != 'pdf'){
@@ -39,10 +46,12 @@ exports.ocr = function(req, res){
     }
     //handle pdf
     else if (file_type == 'pdf'){
+      const file_name = req.file.filename;
+      console.log('file_name',file_name);
       pdf2Img(file_name, (err, data)=>{
         if (err) throw err;
 
-        const file_names = fs.readdirSync(uploads_path).filter(v=>v.startsWith(file_name) && v.length > file_name.length);
+        const file_names = fs.readdirSync(uploads_path).filter(v=>v.startsWith(file_name.split('.')[0]) && v.length > file_name.length);
         const docs = new Array(file_names.length);
         let page_counter = 0;
         for (let i=0; i<file_names.length; i++) {
@@ -72,7 +81,7 @@ exports.ocr = function(req, res){
 }
 
 function pdf2Img(file_name, cb){
-  im.convert(['-density', '300', `${uploads_path}/${file_name}`, '-quality', '100', '-sharpen', '0x1.0', `${uploads_path}/${file_name}.${converted_pdf_format}`], cb);
+  im.convert(['-density', '300', `${uploads_path}/${file_name}`, '-quality', '100', '-sharpen', '0x1.0', `${uploads_path}/${file_name.split('.')[0]}.${converted_pdf_format}`], cb);
 }
 
 function updateCounts(user_id, pages){
