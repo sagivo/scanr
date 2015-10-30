@@ -21,7 +21,19 @@ const upload  = multer({
 });
 
 exports.index = function(req, res){
-  res.render('home', {text: 'hello'});
+  res.render('home');
+}
+
+exports.terms = function(req, res){
+  res.render('terms');
+}
+
+exports.faq = function(req, res){
+  res.render('faq');
+}
+
+exports.how = function(req, res){
+  res.render('how');
 }
 
 exports.error = function(req, res){

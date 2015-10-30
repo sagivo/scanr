@@ -7,6 +7,9 @@ module.exports = function(app){
   app.get('/', ac.all_web, ac.verify_cookie, home.index)
   app.all('/test', ac.all_web, ac.verify_token, home.test);
   app.get('/error', ac.all_web, home.error);
+  app.get('/terms', ac.all_web, home.terms);
+  app.get('/how', ac.all_web, home.how);
+  app.get('/faq', ac.all_web, home.faq);
 
   const users = require('../app/controllers/user_controller');
   app.post('/login', users.login);
