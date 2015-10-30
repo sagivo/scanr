@@ -14,13 +14,18 @@ exports.verify_token = function(req, res, next){
 }
 
 exports.verify_cookie = function(req, res, next){
-  req.token = helpers_general.parseCookies(req).t;
-  if (!req.token) return res.redirect('/');
+  if (res.locals.user || req.path == '/') next();
+  else return res.redirect('/');
+}
 
-  User.findOne({token: req.token}, function (err, user){
-    if (user){
-      req.user = user;
+exports.all_web = function(req, res, next){
+  res.locals.path = req.path;
+  res.locals.user = null;
+  req.token = helpers_general.parseCookies(req).t;
+  if (req.token)
+    User.findOne({token: req.token}, function (err, user){
+      if (user) res.locals.user = req.user = user;
       next();
-    } else return res.redirect('/');
-  });
+    });
+  else next();
 }

@@ -25,7 +25,7 @@ exports.index = function(req, res){
 }
 
 exports.error = function(req, res){
-  text = "";
+  let text = "";
   if (req.query.msg == "1") text = "incorrect password, try again";
   res.render('error', {text: text});
 }

@@ -1,43 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title><%= "hello" %>!</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<html>
+<head>
+  <title></title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-    <!-- Plugin CSS -->
-    <link rel="stylesheet" href="css/animate.min.css" type="text/css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/creative.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-
-  </head>
-  <body>
-
-    <!-- Login -->
-    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-        <div class="loginmodal-container">
-          <h1 id="signupLabel">Login to Your Account</h1><br>
-          <form id="sign-form" class="form-signin" action="register" method="post">
-            <input type="email" placeholder="Email address" name="email" required><br/>
-            <input id="password" type="password" placeholder="Password" name="password" required><br/>
-            <button id="login-submit" class="login loginmodal-submit" type="submit">Join</button>
-          </form>
-          <div class="login-help">
-            <p><a href="#" id="login-link">login</a></p>
-            <p style="display:none;"><a href="#" id="register-link">register</a> | <a href="#" id="forgot-pass-link">forgot password</a></p>
-          </div>
-        </div>
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+  <!-- Always shows a header, even in smaller screens. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">OCR</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link" href="/">Home</a>
+          <% if (user) { %>
+          <a class="mdl-navigation__link" href="/dashboard">Dashboard</a>
+          <a class="mdl-navigation__link" href="/logout">Logout</a>
+          <% } else { %>
+          <a class="mdl-navigation__link" href="/#join">Login</a>
+          <% } %>
+        </nav>
+        <!-- Navigation. We hide it in small screens. -->
+        <nav class="mdl-navigation mdl-layout--small-screen-only">
+          <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
+            <li class="mdl-menu__item"><a class="small_link" href="/">Home</a></li>
+            <% if (user) { %>
+            <li class="mdl-menu__item"><a class="small_link" href="/dashboard">Dashboard</a></li>
+            <li class="mdl-menu__item"><a class="small_link" href="">Logout</a></li>
+            <% } else { %>
+            <li class="mdl-menu__item"><a class="small_link" href="/#join">Login</a></li>
+            <% } %>
+          </ul>
+        </nav>
       </div>
-    </div>
+    </header>
+
+    <main class="mdl-layout__content">
+      <div class="page-content">
