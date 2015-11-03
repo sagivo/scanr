@@ -12,10 +12,10 @@ module.exports = function(app){
   app.get('/faq', ac.all_web, home.faq);
 
   const users = require('../app/controllers/user_controller');
-  app.post('/login', users.login);
-  app.get('/logout', users.logout);
-  app.get('/email', users.email);
-  app.get('/reset', users.reset);
+  app.post('/login', ac.all_web, users.login);
+  app.get('/logout', ac.all_web, users.logout);
+  app.get('/email', ac.all_web, users.email);
+  app.get('/reset', ac.all_web, users.reset);
   app.get('/dashboard', ac.all_web, ac.verify_cookie, users.dashboard);
   app.post('/card', ac.all_web, ac.verify_cookie, users.card);
   app.get('/verify/:id', users.verify);

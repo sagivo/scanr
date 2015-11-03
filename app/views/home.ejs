@@ -4,7 +4,11 @@
   <h1 class="android-font">OCR as a service</h1>
   <h5 class="android-font">Image recognition API. Send us a photo/pdf, get back the text inside.</h5>
 
+  <% if (user) { %>
+  <a href="/dashboard"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Go to dashboard</button></a>
+  <% } else { %>
   <a href="#join"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Let's start!</button></a>
+  <% } %>
 </div>
 
 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
@@ -51,7 +55,9 @@
           <h5>request</h5>
           <code>curl -F "image=@/path/to/image.jpg" http://foo.com?token=YOUR_TOKEN</code><br/><br/>
           <h5>response</h5>
-          <code>{text: 'Hello world!'}</code>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+{text: 'Hello world!'}</code></pre>
         </div>
         <div class="mdl-tabs__panel" id="node">
           node
@@ -95,6 +101,11 @@
   </div>
 </section>
 
+<% if (user) { %>
+<div class="mdl-typography--text-center" id="intro">
+  <a href="/dashboard"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Go to dashboard</button></a>
+</div>
+<% } else { %>
 <a name="join"></a>
 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
   <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white"></header>
@@ -116,7 +127,7 @@
     </div>
   </div>
 </section>
-
+<% } %>
 
 
 

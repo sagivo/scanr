@@ -43,17 +43,5 @@ exports.error = function(req, res){
 }
 
 exports.test = function(req, res){
-  const upload_name = 'file';
-  upload.single(upload_name)(req, res, (err) => {
-    if (err) return res.json({error: err});
-
-    fs.readFile(req.file.path, (err, file) => {
-      s3.upload({Bucket: 'scanr-dev/' + req.user.id, Key: req.file.filename, Body: file}).send((err, data) => {
-        console.log(err,data);
-      });
-    });
-
-    //console.log(req.file);
-    res.end('bye\n');
-  });
+  res.json({text: 'foo'})
 }
