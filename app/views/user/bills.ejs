@@ -1,26 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Bill History</title>
-</head>
-<body>
-<h1>Bill History</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Status</th>
-      <th>Total</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <% bills.forEach( bill => { %>
-  <tr>
-    <td><%= bill.status %></td>
-    <td>$<%= bill.total %></td>
-    <td><%= bill.time %></td>
-  </tr>
-  <% }) %>
-</table>
+<%- include ../header -%>
 
-</body>
-</html>
+<section class="section--center mdl-grid mdl-grid--no-spacing">
+  <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+    <div class="mdl-card__supporting-text">
+      <h4>Bills</h4>
+      <p>Here is your bill history</p>
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Status</th>
+            <th class="mdl-data-table__cell--non-numeric">Total</th>
+            <th class="mdl-data-table__cell">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% bills.forEach( bill => { %>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric"><%= bill.status %></td>
+            <td class="mdl-data-table__cell--non-numeric">$<%= bill.total %></td>
+            <td class="mdl-data-table__cell"><%= bill.time %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include ../footer -%>

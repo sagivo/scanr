@@ -10,6 +10,7 @@ module.exports = function(app){
   app.get('/terms', ac.all_web, home.terms);
   app.get('/how', ac.all_web, home.how);
   app.get('/faq', ac.all_web, home.faq);
+  app.get('/contact', ac.all_web, home.contact);
 
   const users = require('../app/controllers/user_controller');
   app.post('/login', ac.all_web, users.login);
@@ -25,5 +26,6 @@ module.exports = function(app){
 
   const call = require('../app/controllers/call_controller');
   app.all('/ocr', ac.verify_token, call.ocr);
+  app.all('/ocr2', ac.verify_token, call.ocr2);
 
 };

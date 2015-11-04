@@ -2,12 +2,12 @@
 
 <div class="mdl-typography--text-center" id="intro">
   <h1 class="android-font">OCR as a service</h1>
-  <h5 class="android-font">Image recognition API. Send us a photo/pdf, get back the text inside.</h5>
+  <h5 class="android-font">Image recognition API. For developers, by developers.</h5>
 
   <% if (user) { %>
   <a href="/dashboard"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Go to dashboard</button></a>
   <% } else { %>
-  <a href="#join"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Let's start!</button></a>
+  <a href="#join"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Try now</button></a>
   <% } %>
 </div>
 
@@ -16,8 +16,8 @@
   <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
     <div class="mdl-card__supporting-text">
       <h4>About</h4>
-      We offers a simple API service that can extract text from images, any image or documents including PDF files.<br/>
-      Simply post us your image and get a response with the text inside in real time.
+      We offers a simple API service that can extract text from images or PDF files.<br/>
+      Real time image to text - post us your image and get a response with the text inside.
     </div>
   </div>
 </section>
@@ -27,11 +27,12 @@
   <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
     <div class="mdl-card__supporting-text">
       <h4>Who is it for?</h4>
+      <div>Developers. We built it for developers because we are developers as well. Using our API you can build:</div>
       <ul>
-        <li>Lawyers can scan their documents fast.</li>
+        <li>Apps for lawyers to scan their documents fast.</li>
+        <li>Apps to scan your bills.</li>
         <li>Extract details from a business card.</li>
-        <li>Scan and store all your promocodes and paper offers.</li>
-        <li>Extract info from bills.</li>
+        <li>Scan and store all your promo-codes and paper offers.</li>
         <li>Anything you can think of.</li>
       </ul>
     </div>
@@ -53,17 +54,31 @@
 
         <div class="mdl-tabs__panel is-active" id="curl">
           <h5>request</h5>
-          <code>curl -F "image=@/path/to/image.jpg" http://foo.com?token=YOUR_TOKEN</code><br/><br/>
+          <code>curl -F "image=@/path/to/image.png" http://foo.com?token=YOUR_TOKEN</code><br/>
           <h5>response</h5>
 <pre><code>HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 {text: 'Hello world!'}</code></pre>
         </div>
         <div class="mdl-tabs__panel" id="node">
-          node
+          <h5>request</h5>
+<pre><code>npm install scanr
+var scanr = require('scanr')('YOUR_TOKEN')
+scanr.ocr('/path/to/image.png', function(err, text){
+  console.log(text);
+}
+</code></pre>
+          <h5>response</h5>
+          <code>{text: 'Hello world!'}</code></pre>
         </div>
         <div class="mdl-tabs__panel" id="ruby">
-          ruby
+          <h5>request</h5>
+<pre><code>gem install scanr
+scanr = Scanr.new 'YOUR_TOKEN'
+p scanr.ocr '/path/to/image.png'
+</code></pre>
+          <h5>response</h5>
+          <code>{text: 'Hello world!'}</code></pre>
         </div>
       </div>
     </div>

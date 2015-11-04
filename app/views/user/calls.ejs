@@ -1,24 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Calls</title>
-</head>
-<body>
-<h1>Calls</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Call</th>
-    </tr>
-  </thead>
-  <% calls.forEach( call => { %>
-  <tr>
-    <td><%= call.time %></td>
-    <td><%= call.name %></td>
-  </tr>
-  <% }) %>
-</table>
+<%- include ../header -%>
 
-</body>
-</html>
+<section class="section--center mdl-grid mdl-grid--no-spacing">
+  <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+    <div class="mdl-card__supporting-text">
+      <h4>Calls</h4>
+      <p>Here is your call history for this month</p>
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Date</th>
+            <th class="mdl-data-table__cell--non-numeric">Call</th>
+            <th class="mdl-data-table__cell">Pages</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% calls.forEach( call => { %>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric"><%= call.time %></td>
+            <td class="mdl-data-table__cell--non-numeric"><%= call.name %></td>
+            <td class="mdl-data-table__cell"><%= call.pages %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include ../footer -%>

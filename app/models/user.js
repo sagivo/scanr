@@ -22,7 +22,7 @@ var userSchema = new Schema({
 });
 
 userSchema.methods.monthly_calls = function(cb){
-  Call.find({user: this.id}, cb);
+  Call.find({user: this.id}).sort({time:-1}).exec(cb);
 };
 
 userSchema.methods.bills = function(cb){
