@@ -2,7 +2,7 @@
 
 <div class="mdl-typography--text-center" id="intro">
   <h1 class="android-font">OCR as a service</h1>
-  <h5 class="android-font">Image recognition API. For developers, by developers.</h5>
+  <h5 class="android-font">API to detect text in images, built for developers.</h5>
 
   <% if (user) { %>
   <a href="/dashboard"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Go to dashboard</button></a>
@@ -54,7 +54,7 @@
 
         <div class="mdl-tabs__panel is-active" id="curl">
           <h5>request</h5>
-          <code>curl -F "image=@/path/to/image.png" http://foo.com?token=YOUR_TOKEN</code><br/>
+          <code>curl -F "image=@/path/to/image.png" http://api.scanr.xyz/ocr?token=YOUR_TOKEN</code><br/>
           <h5>response</h5>
 <pre><code>HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8

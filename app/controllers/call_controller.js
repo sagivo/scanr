@@ -12,7 +12,8 @@ const acceptable_types = new Set(['pdf', 'bmp', 'pnm', 'png', 'jpg', 'jpeg', 'ti
 
 const upload_name = 'file';
 const converted_pdf_format = 'png';
-const uploads_path = path.join(__dirname , '/../../uploads')
+const uploads_path = path.join(__dirname , '/../../uploads');
+const request = require('request');
 const multer = require('multer');
 const upload  = multer({
   fileSize: 4194304, fieldNameSize: 500,
@@ -26,107 +27,71 @@ const upload  = multer({
   })
 });
 
-exports.ocr2 = function(req, res){
-  upload.single(upload_name)(req, res, (err) => {
-    const file_type = req.file.originalname.split('.').pop().toLowerCase();
-    if (!acceptable_types.has(file_type)) {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(req.file.path);}
-
-    //handle image types
-    if (file_type != 'pdf'){
-      tesseract.process(req.file.path, (err, text) => {
-        res.status(200).json({text: text});
-        fs.unlink(req.file.path);
-        updateCounts(req.user.id, 1);
-      });
-    }
-    //handle pdf
-    else if (file_type == 'pdf'){
-      const file_name = req.file.filename;
-      console.log('file_name',file_name);
-      pdf2Img(file_name, (err, data)=>{
-        if (err) throw err;
-
-        const file_names = fs.readdirSync(uploads_path).filter(v=>v.startsWith(file_name.split('.')[0]) && v.length > file_name.length);
-        const docs = new Array(file_names.length);
-        let page_counter = 0;
-        for (let i=0; i<file_names.length; i++) {
-          //ocr each file
-          const pdf2image_path = path.resolve(uploads_path, file_names[i]);
-          tesseract.process(pdf2image_path, (err, text) => {
-            if(err) { console.log(err); res.render('test', {text: err}); }
-            else {
-              docs[i] = text;
-              //upload files to s3, create file in db, delete file in fs
-              //uploadS3(pdf2image_path, req.user.id, file_names[i], (err, data) => {
-                //if (err) throw err;
-                File.create({user: req.user.id, text: text, url: data.Location}, (err) => {if(err) throw err;} );
-                fs.unlink(pdf2image_path, (err, data) => {if (err) throw err;});
-              //});
-              if (page_counter++ == file_names.length-1) {
-                res.status(200).json({text: docs});
-                fs.unlink(req.file.path, (err, data) => {if (err) throw err;});
-              }
-            }
-          });
-        }
-        updateCounts(req.user.id, file_names.length);
-      });
-    }
-  });
+exports.ocr = function(req, res){
+  //URL  http://i.imgur.com/fYY6P4Y.png
+  if (req.body.url){
+    const originalname = req.body.url.split('/').pop().toLowerCase();
+    const file_type = req.body.url.split('.').pop();
+    if (!acceptable_types.has(file_type) || file_type == 'pdf') {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(req.file.path);}
+    const file_path = `${uploads_path}/${Date.now()}-${originalname}`;
+    request(req.body.url).pipe(fs.createWriteStream(file_path));
+    handle_ocr(file_path, req.user.id, res);
+  } else {
+    upload.single(upload_name)(req, res, (err) => {
+      const file_type = req.file.originalname.split('.').pop().toLowerCase();
+      if (!acceptable_types.has(file_type)) {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(req.file.path);}
+      handle_ocr(req.file.path, req.user.id, res);
+    });
+  }
 }
 
-exports.ocr = function(req, res){
-  upload.single(upload_name)(req, res, (err) => {
-    // console.log(req.file);
-    // return res.end('aa');
-    const file_type = req.file.originalname.split('.').pop().toLowerCase();
-    if (!acceptable_types.has(file_type)) {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(req.file.path);}
+function handle_ocr(file_path, user_id, res){
+  const file_name = file_path.split('/').pop().toLowerCase();
+  const file_type = file_name.split('.').pop();
+  if (!acceptable_types.has(file_type)) {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(file_path);}
 
-    //handle image types
-    if (file_type != 'pdf'){
-      tesseract.process(req.file.path, (err, text) => {
-        uploadS3(req.file.path, req.user.id, Date.now() + '-' + req.file.originalname, (err, data) => {
-          res.status(200).json({text: text});
-          File.create({user: req.user.id, text: text, url: data.Location}, (err) => {if (err) throw err;} );
-        });
-        fs.unlink(req.file.path);
-        updateCounts(req.user.id, 1);
+  //handle image types
+  if (file_type != 'pdf'){
+    tesseract.process(file_path, (err, text) => {
+      uploadS3(file_path, user_id, file_name, (err, data) => {
+        res.status(200).json({text: text});
+        File.create({user: user_id, text: text, url: data.Location}, (err) => {if (err) throw err;} );
+        fs.unlink(file_path);
       });
-    }
-    //handle pdf
-    else if (file_type == 'pdf'){
-      const file_name = req.file.filename;
-      console.log('file_name',file_name);
-      pdf2Img(file_name, (err, data)=>{
-        if (err) throw err;
+      updateCounts(user_id, 1);
+    });
+  }
+  //handle pdf
+  else if (file_type == 'pdf'){
+    pdf2Img(file_name, (err, data)=>{
+      if (err) throw err;
 
-        const file_names = fs.readdirSync(uploads_path).filter(v=>v.startsWith(file_name.split('.')[0]) && v.length > file_name.length);
-        const docs = new Array(file_names.length);
-        let page_counter = 0;
-        for (let i=0; i<file_names.length; i++) {
-          //ocr each file
-          const pdf2image_path = path.resolve(uploads_path, file_names[i]);
-          tesseract.process(pdf2image_path, (err, text) => {
-            if(err) { console.log(err); res.render('test', {text: err}); }
-            else {
-              docs[i] = text;
-              //upload files to s3, create file in db, delete file in fs
-              uploadS3(pdf2image_path, req.user.id, file_names[i], (err, data) => {
-                if (err) throw err;
-                File.create({user: req.user.id, text: text, url: data.Location}, (err) => {if(err) throw err;} );
-                fs.unlink(pdf2image_path, (err, data) => {if (err) throw err;});
-              });
-              if (page_counter++ == file_names.length-1) {
-                res.status(200).json({text: docs});
-                fs.unlink(req.file.path, (err, data) => {if (err) throw err;});
-              }
+      const file_names = fs.readdirSync(uploads_path).filter(v=>v.startsWith(file_name.split('.')[0]) && v.length > file_name.length);
+      const docs = new Array(file_names.length);
+      let page_counter = 0;
+      for (let i=0; i<file_names.length; i++) {
+        //ocr each file
+        const pdf2image_path = path.resolve(uploads_path, file_names[i]);
+        tesseract.process(pdf2image_path, (err, text) => {
+          if(err) { console.log(err); res.render('test', {text: err}); }
+          else {
+            docs[i] = text;
+            //upload files to s3, create file in db, delete file in fs
+            uploadS3(pdf2image_path, user_id, file_names[i], (err, data) => {
+              if (err) throw err;
+              File.create({user: user_id, text: text, url: data.Location}, (err) => {if(err) throw err;} );
+              fs.unlink(pdf2image_path, (err, data) => {if (err) throw err;});
+            });
+            if (page_counter++ == file_names.length-1) {
+              res.status(200).json({text: docs});
+              fs.unlink(file_path, (err, data) => {if (err) throw err;});
             }
-          });
-        }
-        updateCounts(req.user.id, file_names.length);
-      });
-    }
-  });
+          }
+        });
+      }
+      updateCounts(user_id, file_names.length);
+    });
+  }
 }
 
 function pdf2Img(file_name, cb){

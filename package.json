@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "*",
     "mongoose": "*",
+    "request": "*",
     "ejs": "*",
     "node-tesseract": "*",
     "dead-simple-crypt": "*",
