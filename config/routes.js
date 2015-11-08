@@ -26,6 +26,4 @@ module.exports = function(app){
 
   const call = require('../app/controllers/call_controller');
   app.all('/ocr', ac.verify_token, call.ocr);
-  //app.all('/ocr2', ac.verify_token, call.ocr2);
-
 };

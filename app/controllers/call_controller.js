@@ -28,31 +28,32 @@ const upload  = multer({
 });
 
 exports.ocr = function(req, res){
-  //URL  http://i.imgur.com/fYY6P4Y.png
+  //http://i.imgur.com/fYY6P4Y.png | 6mhdcvh7h8pk3xr
+  const lang = req.query.lang || 'eng';
   if (req.body.url){
     const originalname = req.body.url.split('/').pop().toLowerCase();
     const file_type = req.body.url.split('.').pop();
     if (!acceptable_types.has(file_type) || file_type == 'pdf') {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(req.file.path);}
     const file_path = `${uploads_path}/${Date.now()}-${originalname}`;
     request(req.body.url).pipe(fs.createWriteStream(file_path));
-    handle_ocr(file_path, req.user.id, res);
+    handle_ocr(file_path, req.user.id, res, lang);
   } else {
     upload.single(upload_name)(req, res, (err) => {
       const file_type = req.file.originalname.split('.').pop().toLowerCase();
       if (!acceptable_types.has(file_type)) {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(req.file.path);}
-      handle_ocr(req.file.path, req.user.id, res);
+      handle_ocr(req.file.path, req.user.id, res, lang);
     });
   }
 }
 
-function handle_ocr(file_path, user_id, res){
+function handle_ocr(file_path, user_id, res, lang){
   const file_name = file_path.split('/').pop().toLowerCase();
   const file_type = file_name.split('.').pop();
   if (!acceptable_types.has(file_type)) {return res.status(500).json({error: 'unsupported file type'}); fs.unlink(file_path);}
 
   //handle image types
   if (file_type != 'pdf'){
-    tesseract.process(file_path, (err, text) => {
+    tesseract.process(file_path, {l: lang}, (err, text) => {
       uploadS3(file_path, user_id, file_name, (err, data) => {
         res.status(200).json({text: text});
         File.create({user: user_id, text: text, url: data.Location}, (err) => {if (err) throw err;} );
@@ -72,7 +73,7 @@ function handle_ocr(file_path, user_id, res){
       for (let i=0; i<file_names.length; i++) {
         //ocr each file
         const pdf2image_path = path.resolve(uploads_path, file_names[i]);
-        tesseract.process(pdf2image_path, (err, text) => {
+        tesseract.process(pdf2image_path, {l: lang}, (err, text) => {
           if(err) { console.log(err); res.render('test', {text: err}); }
           else {
             docs[i] = text;

@@ -12,7 +12,10 @@ RUN apt-get install -y ghostscript
 RUN apt-get clean
 
 #-----------install tesseract-------------
-RUN apt-get install -y tesseract-ocr
+RUN apt-get install -y \
+  tesseract-ocr \
+  tesseract-ocr-eng \
+  tesseract-ocr-heb
 
 #-----------install node-------------
 COPY . /src
