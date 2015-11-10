@@ -20,11 +20,11 @@ exports.login = function(req, res){
         if (user) {
           res.redirect('email');
           //send email
-          const transporter = nodemailer.createTransport({service: 'Gmail', auth: {user: secrets.mailer.email,pass: secrets.mailer.password}});
+          const transporter = nodemailer.createTransport({service: 'Gmail', auth: {user: secrets.mailer.email, pass: secrets.mailer.password}});
           transporter.sendMail({
-            from: `OCR <${secrets.mailer.email}>`, to: user.email,
-            subject: 'Welcome to OCR',
-            html: `<h1>Welcome to OCR</h1><a href="http://localhost:8080/verify/${user.id}">Please click here to verify your account</a><p>Thanks,<br/>The team</p>`
+            from: `scanR <${secrets.mailer.email}>`, to: 'sagiv4@gmail.com',
+            subject: 'Welcome to scanR',
+            html: `<h1>Welcome to OCR</h1><a href="//www.scanr.xyz/verify/${user.id}">Please click here to verify your account</a><p>Thanks,<br/>The team</p><p>To learn more, read our <a href="//docs.scanr.xyz">docs.</a></p>`
           }, (err, info)=> console.log(err) );
         } else return res.redirect('/error');
       });
@@ -33,7 +33,7 @@ exports.login = function(req, res){
 }
 
 exports.dashboard = function(req, res){
-	res.render('user/dashboard', {user: req.user});
+	res.render('user/dashboard', {user: req.user, title: 'Dashboard'});
 }
 
 exports.email = function(req, res){

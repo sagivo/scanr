@@ -1,5 +1,9 @@
 <%- include ../header -%>
 
+  <h2>Dashboard</h2>
+
+  <img src="/images/people2.jpg" id="dashboard-main-img">
+
   <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
     <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
       <div class="mdl-card__supporting-text">
@@ -43,12 +47,12 @@
 
   <a name="payment"></a>
   <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-    <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white"></header>
+    <header id="pay-img" class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white"></header>
     <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
       <div class="mdl-card__supporting-text">
         <h4>Update Payment</h4>
         <form id="payment-form" onsubmit="return onUpdateCard(this);" action="card" method="POST" >
-          <p>Level up! Get more as many calls as you need.</p>
+          <p>Level up! Get as many calls as you need. You have to update a valid credit card to use more than 100 calls/month.</p>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" type="text" name="number" size="20" data-stripe="number" maxlength="18" />
             <label class="mdl-textfield__label" for="email">number...</label>

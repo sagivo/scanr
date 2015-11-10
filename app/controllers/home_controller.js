@@ -25,15 +25,15 @@ exports.index = function(req, res){
 }
 
 exports.contact = function(req, res){
-  res.render('contact');
+  res.render('contact', {title: 'Contact'});
 }
 
 exports.terms = function(req, res){
-  res.render('terms');
+  res.render('terms', {title: 'Terms'});
 }
 
 exports.faq = function(req, res){
-  res.render('faq');
+  res.render('faq', {title: 'FAQ'});
 }
 
 exports.how = function(req, res){
